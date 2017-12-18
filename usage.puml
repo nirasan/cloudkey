@@ -1,0 +1,32 @@
+
+@startuml
+
+actor user
+participant cloudkey
+participant "Cloud KMS" as cloud
+
+== Authentication (if not authentiated) ==
+
+user -> cloud : authentication request
+user <-- cloud : response <color:red>"user credentials"</color>
+
+== Create key (only once) ==
+
+user -> cloud : request creating key
+user <-- cloud : response created <color:orange>"key info"</color>
+
+== Configuration ==
+
+user -> cloudkey : create configuration\nwith <color:red>"user credentials"</color> and <color:orange>"key info"</color>
+
+== Encrypt ==
+
+cloudkey -> cloud : encrypt request\nwith <color:blue>"plaintext"</color> and <color:red>"user credentials"</color> and <color:orange>"key info"</color>
+cloudkey <-- cloud : encrypt response with <color:green>"ciphertext"</color>
+
+== Decrypt ==
+
+cloudkey -> cloud : decrypt request\nwith <color:green>"cipertext"</color> and <color:red>"user credentials"</color> and <color:orange>"key info"</color>
+cloudkey <-- cloud : decrypt response with <color:blue>"plaintext"</color>
+
+@enduml
