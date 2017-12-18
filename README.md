@@ -3,16 +3,17 @@
 * This is a program that encrypts and decrypts using the cloud's key management service such as GCP and AWS.
 * With this program, encryption and decryption can be done securely without managing the encryption key locally.
 
-![usage](usage.png)
-
 # Usage
 
 ## Overview
 
 1. Create GCP or AWS account.
 1. Start using Key Management Service.
+1. Install cloudkey
 1. Create cloudkey configuration.
 1. Encrypt and decrypt your files.
+
+![usage](usage.png)
 
 ## Create GCP or AWS account
 
@@ -36,6 +37,12 @@
   * Region (e.g. "us-west-2")
   * Key ID (e.g. "arn:aws:kms:us-west-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab")
 
+## Install
+
+```bash
+go install github.com/nirasan/cloudkey
+```
+
 ## Create cloudkey configuration
 
 ### GCP
@@ -51,7 +58,7 @@ gcloud auth application-default login
 * Create configuration.
 
 ```
-cloudkey config gcp gcloud-account --project PROJECT_NAME --location LOCATION --keyring KEYRING_NAME --crypto-key KEY_NAME CONFIG_FILE
+cloudkey config gcp gcloud-account --project PROJECT_NAME --location LOCATION --keyring KEYRING_NAME --key KEY_NAME CONFIG_FILE
 ```
 
 #### Login with service account
@@ -61,7 +68,7 @@ cloudkey config gcp gcloud-account --project PROJECT_NAME --location LOCATION --
 * Create configuration.
 
 ```
-cloudkey config gcp gcloud-account --project PROJECT_NAME --location LOCATION --keyring KEYRING_NAME --crypto-key KEY_NAME --service-account-key SERVICE_ACCOUNT_JSON_KEY_FILE CONFIG_FILE
+cloudkey config gcp service-account --project PROJECT_NAME --location LOCATION --keyring KEYRING_NAME --key KEY_NAME --service-account-key SERVICE_ACCOUNT_JSON_KEY_FILE CONFIG_FILE
 ```
 
 ### AWS
@@ -73,7 +80,7 @@ cloudkey config gcp gcloud-account --project PROJECT_NAME --location LOCATION --
 * Create configuration.
 
 ```
-cloudkey config aws shared-creds --cred-file CREDENTIAL_FILE(default: ~/.aws/credentials) --profile PROFILE(default: default) --region REGION --crypto-key-id KEY_ID CONFIG_FILE
+cloudkey config aws shared-creds --cred-file CREDENTIAL_FILE(default: ~/.aws/credentials) --profile PROFILE(default: default) --region REGION --key KEY_ID CONFIG_FILE
 ```
 
 #### Login with static credentials
@@ -83,7 +90,7 @@ cloudkey config aws shared-creds --cred-file CREDENTIAL_FILE(default: ~/.aws/cre
 * Create configuration.
 
 ```
-cloudkey config aws static-creds --access-key-id ACCESS_KEY_ID --secret-access-key SECRET_ACCESS_KEY --access-token ACCESS_TOKEN --region REGION --crypto-key-id KEY_ID CONFIG_FILE
+cloudkey config aws static-creds --access-key-id ACCESS_KEY_ID --secret-access-key SECRET_ACCESS_KEY --access-token ACCESS_TOKEN --region REGION --key KEY_ID CONFIG_FILE
 ```
 
 ## Encrypt and decrypt your files
